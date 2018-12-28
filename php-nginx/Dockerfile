@@ -74,3 +74,5 @@ EXPOSE 80
 ENTRYPOINT [ "entrypoint" ]
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+
+WORKDIR /var/www/html

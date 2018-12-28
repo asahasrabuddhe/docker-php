@@ -82,3 +82,5 @@ ENTRYPOINT [ "entrypoint" ]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 
 USER www-data
+
+WORKDIR /var/www/html

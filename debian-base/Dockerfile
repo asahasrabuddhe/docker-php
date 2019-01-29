@@ -24,7 +24,9 @@ RUN apt-get update  \
 RUN rm -r /var/lib/apt/lists/*
 
 # Set Locale / Timezone
-RUN echo Asia/Kolkata > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata \
+ENV TZ=Asia/Kolkata
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone \
     && echo 'en_IN.UTF-8 UTF-8\n\
     en_US ISO-8859-1\n\
     en_US.ISO-8859-15 ISO-8859-15\n\

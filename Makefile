@@ -3,57 +3,51 @@ build: build-base build-apache build-nginx
 
 .PHONY: build-base
 build-base:
-#	docker build -f bases/debian.Dockerfile -t ajitemsahasrabuddhe/debian-base:1.1 .
-	docker build -f bases/ubuntu.Dockerfile --build-arg version=trusty -t ajitemsahasrabuddhe/ubuntu-base:trusty-1.0 .
-	docker build -f bases/ubuntu.Dockerfile --build-arg version=xenial -t ajitemsahasrabuddhe/ubuntu-base:xenial-1.0 .
-	docker build -f bases/ubuntu.Dockerfile --build-arg version=bionic -t ajitemsahasrabuddhe/ubuntu-base:bionic-1.0 .	
+	for base in "jessie" "stretch"; do \
+		docker build -f bases/debian.Dockerfile --build-arg version="$$base"-slim -t ajitemsahasrabuddhe/debian-base:"$$base"-1.0 .; \
+	done;
+	for base in "trusty", "xenial", "bionic"; do \
+		docker build -f bases/ubuntu.Dockerfile --build-arg version="$$base" -t ajitemsahasrabuddhe/ubuntu-base:"$$base"-1.0 .; \
+	done;
 
 .PHONY: build-apache
 build-apache:
-	docker build -f php-apache/Dockerfile --build-arg php_version=5.6 -t ajitemsahasrabuddhe/php-apache:5.6-dev .
-	docker build -f php-apache/Dockerfile --build-arg php_version=5.6 --build-arg env=prod -t ajitemsahasrabuddhe/php-apache:5.6 .
-	docker build -f php-apache/Dockerfile --build-arg php_version=7.0 -t ajitemsahasrabuddhe/php-apache:7.0-dev .
-	docker build -f php-apache/Dockerfile --build-arg php_version=7.0 --build-arg env=prod -t ajitemsahasrabuddhe/php-apache:7.0 .
-	docker build -f php-apache/Dockerfile --build-arg php_version=7.1 -t ajitemsahasrabuddhe/php-apache:7.1-dev .
-	docker build -f php-apache/Dockerfile --build-arg php_version=7.1 --build-arg env=prod -t ajitemsahasrabuddhe/php-apache:7.1 .
-	docker build -f php-apache/Dockerfile --build-arg php_version=7.2 -t ajitemsahasrabuddhe/php-apache:7.2-dev .
-	docker build -f php-apache/Dockerfile --build-arg php_version=7.2 --build-arg env=prod -t ajitemsahasrabuddhe/php-apache:7.2 .
-	docker build -f php-apache/Dockerfile --build-arg php_version=7.3 -t ajitemsahasrabuddhe/php-apache:7.3-dev .
-	docker build -f php-apache/Dockerfile --build-arg php_version=7.3 --build-arg env=prod -t ajitemsahasrabuddhe/php-apache:7.3 .
+	for base_version in "jessie" "stretch"; do \
+		for php_version in "5.6" "7.0" "7.1" "7.2" "7.3"; do \
+			for env in "dev" "prod"; do \
+				docker build -f apache/debian.Dockerfile --build-arg base_version="$$base_version"-1.0 --build-arg php_version="$$php_version" --build-arg env="$$env" -t ajitemsahasrabuddhe/php-apache:"$$base_version"-"$$php_version"-dev .; \
+			done; \
+		done; \
+	done;
 
 .PHONY: build-nginx
 build-nginx:
-	docker build -f php-nginx/Dockerfile --build-arg php_version=5.6 -t ajitemsahasrabuddhe/php-nginx:5.6-dev .
-	docker build -f php-nginx/Dockerfile --build-arg php_version=5.6 --build-arg env=prod -t ajitemsahasrabuddhe/php-nginx:5.6 .
-	docker build -f php-nginx/Dockerfile --build-arg php_version=7.0 -t ajitemsahasrabuddhe/php-nginx:7.0-dev .
-	docker build -f php-nginx/Dockerfile --build-arg php_version=7.0 --build-arg env=prod -t ajitemsahasrabuddhe/php-nginx:7.0 .
-	docker build -f php-nginx/Dockerfile --build-arg php_version=7.1 -t ajitemsahasrabuddhe/php-nginx:7.1-dev .
-	docker build -f php-nginx/Dockerfile --build-arg php_version=7.1 --build-arg env=prod -t ajitemsahasrabuddhe/php-nginx:7.1 .
-	docker build -f php-nginx/Dockerfile --build-arg php_version=7.2 -t ajitemsahasrabuddhe/php-nginx:7.2-dev .
-	docker build -f php-nginx/Dockerfile --build-arg php_version=7.2 --build-arg env=prod -t ajitemsahasrabuddhe/php-nginx:7.2 .
-	docker build -f php-nginx/Dockerfile --build-arg php_version=7.3 -t ajitemsahasrabuddhe/php-nginx:7.3-dev .
-	docker build -f php-nginx/Dockerfile --build-arg php_version=7.3 --build-arg env=prod -t ajitemsahasrabuddhe/php-nginx:7.3 .
+	for base_version in "jessie" "stretch"; do \
+		for php_version in "5.6" "7.0" "7.1" "7.2" "7.3"; do \
+			for env in "dev" "prod"; do \
+				docker build -f nginx/debian.Dockerfile --build-arg base_version="$$base_version"-1.0 --build-arg php_version="$$php_version" --build-arg env="$$env" -t ajitemsahasrabuddhe/php-nginx:"$$base_version"-"$$php_version"-dev .; \
+			done; \
+		done; \
+	done;
 
 .PHONY: push
 push:
-	docker push ajitemsahasrabuddhe/debian-base:1.1
-	docker push ajitemsahasrabuddhe/php-apache:5.6
-	docker push ajitemsahasrabuddhe/php-apache:5.6-dev
-	docker push ajitemsahasrabuddhe/php-apache:7.0
-	docker push ajitemsahasrabuddhe/php-apache:7.0-dev
-	docker push ajitemsahasrabuddhe/php-apache:7.1
-	docker push ajitemsahasrabuddhe/php-apache:7.1-dev
-	docker push ajitemsahasrabuddhe/php-apache:7.2
-	docker push ajitemsahasrabuddhe/php-apache:7.2-dev
-	docker push ajitemsahasrabuddhe/php-apache:7.3
-	docker push ajitemsahasrabuddhe/php-apache:7.3-dev
-	docker push ajitemsahasrabuddhe/php-nginx:5.6
-	docker push ajitemsahasrabuddhe/php-nginx:5.6-dev
-	docker push ajitemsahasrabuddhe/php-nginx:7.0
-	docker push ajitemsahasrabuddhe/php-nginx:7.0-dev
-	docker push ajitemsahasrabuddhe/php-nginx:7.1
-	docker push ajitemsahasrabuddhe/php-nginx:7.1-dev
-	docker push ajitemsahasrabuddhe/php-nginx:7.2
-	docker push ajitemsahasrabuddhe/php-nginx:7.2-dev
-	docker push ajitemsahasrabuddhe/php-nginx:7.3
-	docker push ajitemsahasrabuddhe/php-nginx:7.3-dev
+	for base in "jessie" "stretch"; do \
+		docker push ajitemsahasrabuddhe/debian-base:"$$base"-1.0; \
+	done; \
+	for base in "trusty" "xenial" "bionic"; do \
+		docker push ajitemsahasrabuddhe/ubuntu-base:"$$base"-1.0; \
+	done; \
+	for base_version in "jessie" "stretch"; do \
+		for php_version in "5.6" "7.0" "7.1" "7.2" "7.3"; do \
+				docker push ajitemsahasrabuddhe/php-apache:"$$base_version"-"$$php_version"; \
+				docker push ajitemsahasrabuddhe/php-apache:"$$base_version"-"$$php_version"-dev; \
+		done; \
+	done;
+	for base_version in "trusty" "xenial" "bionic"; do \
+		for php_version in "5.6" "7.0" "7.1" "7.2" "7.3"; do \
+				docker push ajitemsahasrabuddhe/php-apache:"$$base_version"-"$$php_version"; \
+				docker push ajitemsahasrabuddhe/php-apache:"$$base_version"-"$$php_version"-dev; \
+		done; \
+	done; \
+	

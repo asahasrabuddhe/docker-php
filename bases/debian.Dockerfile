@@ -1,4 +1,5 @@
-FROM debian:stretch-slim
+ARG version=latest
+FROM debian:${version}
 
 LABEL maintainer="Ajitem Sahasrabuddhe <me@ajitem.com>"
 

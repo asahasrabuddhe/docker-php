@@ -1,4 +1,5 @@
-FROM ajitemsahasrabuddhe/debian-base:1.1
+ARG base_version=latest
+FROM ajitemsahasrabuddhe/debian-base:${base_version}}
 
 ARG env=dev
 ARG php_version

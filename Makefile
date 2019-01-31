@@ -3,7 +3,10 @@ build: build-base build-apache build-nginx
 
 .PHONY: build-base
 build-base:
-	docker build -f debian-base/Dockerfile -t ajitemsahasrabuddhe/debian-base:1.1 .
+#	docker build -f bases/debian.Dockerfile -t ajitemsahasrabuddhe/debian-base:1.1 .
+	docker build -f bases/ubuntu.Dockerfile --build-arg version=trusty -t ajitemsahasrabuddhe/ubuntu-base:trusty-1.0 .
+	docker build -f bases/ubuntu.Dockerfile --build-arg version=xenial -t ajitemsahasrabuddhe/ubuntu-base:xenial-1.0 .
+	docker build -f bases/ubuntu.Dockerfile --build-arg version=bionic -t ajitemsahasrabuddhe/ubuntu-base:bionic-1.0 .	
 
 .PHONY: build-apache
 build-apache:

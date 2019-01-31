@@ -3,8 +3,8 @@ build: build-base build-apache build-nginx
 
 .PHONY: build-base
 build-base:
-	docker build -f debian-base/Dockerfile --build-arg version=jessie-slim -t ajitemsahasrabuddhe/debian-base:jessie-1.0 .
-	docker build -f debian-base/Dockerfile --build-arg version=stretch-slim -t ajitemsahasrabuddhe/debian-base:stretch-1.0 .
+	docker build -f bases/Dockerfile --build-arg version=jessie-slim -t ajitemsahasrabuddhe/debian-base:jessie-1.0 .
+	docker build -f bases/Dockerfile --build-arg version=stretch-slim -t ajitemsahasrabuddhe/debian-base:stretch-1.0 .
 
 .PHONY: build-apache
 build-apache:

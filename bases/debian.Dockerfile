@@ -1,5 +1,5 @@
 ARG version=latest
-FROM debian:${version}}
+FROM debian:${version}
 
 LABEL maintainer="Ajitem Sahasrabuddhe <me@ajitem.com>"
 

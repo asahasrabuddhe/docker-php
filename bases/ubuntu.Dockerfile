@@ -16,6 +16,7 @@ RUN apt-get update  \
     lsb-release \
     ca-certificates \
     python3-software-properties \
+    software-properties-common \
     zip \
     unzip \
     nano \

@@ -6,7 +6,7 @@ build-base:
 	for base in "jessie" "stretch"; do \
 		docker build -f bases/debian.Dockerfile --build-arg version="$$base"-slim -t ajitemsahasrabuddhe/debian-base:"$$base"-1.0 .; \
 	done;
-	for base in "trusty", "xenial", "bionic"; do \
+	for base in "trusty" "xenial" "bionic"; do \
 		docker build -f bases/ubuntu.Dockerfile --build-arg version="$$base" -t ajitemsahasrabuddhe/ubuntu-base:"$$base"-1.0 .; \
 	done;
 

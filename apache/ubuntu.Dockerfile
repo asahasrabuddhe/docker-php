@@ -5,8 +5,7 @@ ARG env=dev
 ARG php_version
 
 # Install PHP / Apache / Composer
-RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
-    && sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list' \
+RUN add-apt-repository ppa:ondrej/php \
     && apt-get update \
     && apt-get install -y \
     php${php_version} \

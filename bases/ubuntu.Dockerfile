@@ -18,11 +18,10 @@ RUN apt-get update  \
     nano \
     cron \
     supervisor \
+    tzdata \
     iputils-ping \
     locales \
     sudo
-
-RUN [ "$version" -ne "trusty" ] apt install -y tz-data    
 
 # cleanup
 RUN rm -r /var/lib/apt/lists/*

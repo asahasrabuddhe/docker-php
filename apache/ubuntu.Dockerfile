@@ -6,6 +6,7 @@ ARG php_version
 
 # Install PHP / Apache / Composer
 RUN add-apt-repository ppa:ondrej/php \
+    && add-apt-repository ppa:ondrej/apache2 \
     && apt-get update \
     && apt-get install -y \
     php${php_version} \

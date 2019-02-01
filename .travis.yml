@@ -2,8 +2,7 @@ services:
   - generic
 script:
   - make build
-after_success:
-  - docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}"
+  - echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
   - make push
 env:
   global:

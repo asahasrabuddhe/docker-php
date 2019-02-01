@@ -3,9 +3,11 @@ FROM ubuntu:${version}
 
 LABEL maintainer="Ajitem Sahasrabuddhe <me@ajitem.com>"
 
+# set non interactive frontend
+ENV DEBIAN_FRONTEND noninteractive
+
 # Prepare image
-RUN export DEBIAN_FRONTEND=noninteractive \
-    apt-get update  \
+RUN apt-get update  \
     && apt-get install -y \
     curl \
     wget \

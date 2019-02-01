@@ -19,6 +19,7 @@ RUN apt-get update  \
     cron \
     supervisor \
     iputils-ping \
+    tz-data \
     locales \
     sudo
     

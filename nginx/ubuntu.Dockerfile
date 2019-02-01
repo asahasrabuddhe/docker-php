@@ -5,7 +5,7 @@ ARG env=dev
 ARG php_version
 
 # Install PHP-FPM / nginx / Composer
-RUN RUN add-apt-repository ppa:ondrej/php \
+RUN add-apt-repository ppa:ondrej/php \
     && add-apt-repository ppa:ondrej/nginx \
     && apt-get update \
     && apt-get install -y \

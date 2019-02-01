@@ -1,5 +1,5 @@
 ARG base_version=latest
-FROM ajitemsahasrabuddhe/debian-base:${base_version}
+FROM ajitemsahasrabuddhe/ubuntu-base:${base_version}
 
 ARG env=dev
 ARG php_version

@@ -39,3 +39,12 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     usr/sbin/locale-gen
 
 RUN echo %www-data ALL=\(ALL\) NOPASSWD:ALL > /etc/sudoers
+
+# add message of the day generation script
+COPY scripts/gen-motd.sh /etc/gen-motd.sh
+
+# generate message of the day
+RUN chmod a+x /etc/gen-motd.sh && /etc/gen-motd.sh > /etc/motd && rm /etc/gen-motd.sh
+
+# show message of the day when a valid terminal connects
+RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' >> /root/.bashrc && mkdir -p /var/www && cp /root/.bashrc /var/www/.bashrc

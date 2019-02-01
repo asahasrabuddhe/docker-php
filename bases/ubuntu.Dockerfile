@@ -4,7 +4,8 @@ FROM ubuntu:${version}
 LABEL maintainer="Ajitem Sahasrabuddhe <me@ajitem.com>"
 
 # Prepare image
-RUN apt-get update  \
+RUN export DEBIAN_FRONTEND=noninteractive \
+    apt-get update  \
     && apt-get install -y \
     curl \
     wget \

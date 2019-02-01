@@ -12,7 +12,7 @@ RUN apt-get update  \
     apt-transport-https \
     lsb-release \
     ca-certificates \
-    python-software-properties \
+    python3-software-properties \
     zip \
     unzip \
     nano \

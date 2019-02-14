@@ -3,6 +3,9 @@ FROM ubuntu:${version}
 
 LABEL maintainer="Ajitem Sahasrabuddhe <me@ajitem.com>"
 
+# set non interactive frontend
+ENV DEBIAN_FRONTEND noninteractive
+
 # Prepare image
 RUN apt-get update  \
     && apt-get install -y \
@@ -12,15 +15,18 @@ RUN apt-get update  \
     apt-transport-https \
     lsb-release \
     ca-certificates \
+    python3-software-properties \
+    software-properties-common \
     zip \
     unzip \
     nano \
     cron \
     supervisor \
+    tzdata \
     iputils-ping \
     locales \
     sudo
-    
+
 # cleanup
 RUN rm -r /var/lib/apt/lists/*
 
@@ -35,4 +41,14 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     >> /etc/locale.gen &&  \
     usr/sbin/locale-gen
 
+# add www-data to sudoers group
 RUN echo %www-data ALL=\(ALL\) NOPASSWD:ALL > /etc/sudoers
+
+# add message of the day generation script
+COPY scripts/gen-motd.sh /etc/gen-motd.sh
+
+# generate message of the day
+RUN chmod a+x /etc/gen-motd.sh && /etc/gen-motd.sh > /etc/motd && rm /etc/gen-motd.sh
+
+# show message of the day when a valid terminal connects
+RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' >> /root/.bashrc && mkdir -p /var/www && cp /root/.bashrc /var/www/.bashrc

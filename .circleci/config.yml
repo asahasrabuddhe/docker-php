@@ -31,19 +31,19 @@ workflows:
                 only: master
         - build-apache:
             requires:
-              - build
+              - build-base
             filters:
               branches:
                 only: master
         - build-nginx:
             requires:
-              - build
+              - build-base
             filters:
               branches:
                 only: master
         - test:
             requires:
-              - build
+              - build-base
               - build-apache
               - build-nginx
             filters:

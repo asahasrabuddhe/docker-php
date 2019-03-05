@@ -1,4 +1,5 @@
-FROM centos:7
+ARG version=latest
+FROM centos:${version}
 
 LABEL maintainer="Ajitem Sahasrabuddhe <me@ajitem.com>"
 

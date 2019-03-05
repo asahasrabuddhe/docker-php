@@ -1,10 +1,20 @@
 version: 2
 jobs:
-  build:
+  build-base:
     machine: true
     steps:
       - checkout
-      - run: make build
+      - run: make build-base
+  build-apache:
+    machine: true
+      steps:
+        - checkout
+        - run: make build-apache
+  build-nginx:
+    machine: true
+      steps:
+        - checkout
+        - run: make build-nginx
   push:
     machine: true
     steps:
@@ -15,13 +25,27 @@ workflows:
     version: 2
     build_and_push:
       jobs:
-        - build:
+        - build-base:
+            filters:
+              branches:
+                only: master
+        - build-apache:
+            requires:
+              - build
+            filters:
+              branches:
+                only: master
+        - build-nginx:
+            requires:
+              - build
             filters:
               branches:
                 only: master
         - test:
             requires:
               - build
+              - build-apache
+              - build-nginx
             filters:
               branches:
                 only: master

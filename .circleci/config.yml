@@ -1,12 +1,15 @@
 version: 2
 jobs:
   build:
+  machine: true
     steps:
       - checkout
       - run: make build
   push:
+  machine: true
     steps:
       - checkout
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - run: make push
 workflows:
     version: 2

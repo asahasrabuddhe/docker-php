@@ -1,0 +1,7 @@
+version: 2
+jobs:
+  build-base:
+    machine: true
+    steps:
+      - checkout
+      - run: make build-base

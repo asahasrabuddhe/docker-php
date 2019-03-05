@@ -7,14 +7,14 @@ jobs:
       - run: make build-base
   build-apache:
     machine: true
-      steps:
-        - checkout
-        - run: make build-apache
+    steps:
+      - checkout
+      - run: make build-apache
   build-nginx:
     machine: true
-      steps:
-        - checkout
-        - run: make build-nginx
+    steps:
+      - checkout
+      - run: make build-nginx
   push:
     machine: true
     steps:

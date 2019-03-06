@@ -1,4 +1,4 @@
-ARG version=latest
+ARG version=6
 FROM centos:${version}
 
 LABEL maintainer="Ajitem Sahasrabuddhe <me@ajitem.com>"
@@ -6,31 +6,29 @@ LABEL maintainer="Ajitem Sahasrabuddhe <me@ajitem.com>"
 # Prepare image & cleanup
 RUN yum update -y \
     && yum install -y \
+    curl \
     wget \
     git \
     zip \
     unzip \
     nano \
     crontabs \
-    python \
+    tzdata \
     iputils \
     locales \
+    python-setuptools \
     sudo \
     && yum clean all
 
-# As supervisor is not a package available in the yum repositories, install it manually *cringe*
-RUN curl -sSL https://bootstrap.pypa.io/get-pip.py | python \
-    && pip install supervisor
+RUN mkdir -p /var/log/supervisor \
+    && easy_install supervisor
 
-COPY scripts/supervisord /etc/init.d/supervisord
-
-RUN chmod a+x /etc/init.d/supervisord
-
-# Set Timezone
+# Set Locale / Timezone
 ENV TZ=Asia/Kolkata
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone
 
+# add www-data to sudoers group
 RUN echo %www-data ALL=\(ALL\) NOPASSWD:ALL > /etc/sudoers
 
 # add message of the day generation script

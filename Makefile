@@ -9,8 +9,11 @@ build-base:
 	for base in "trusty" "xenial" "bionic"; do \
 		docker build -f bases/ubuntu.Dockerfile --build-arg version="$$base" -t ajitemsahasrabuddhe/ubuntu-base:"$$base"-1.0 .; \
 	done;
-	for base in "6" "7"; do \
+	for base in "centos6" "centos7"; do \
 		docker build -f bases/centos.Dockerfile --build-arg version="$$base" -t ajitemsahasrabuddhe/centos-base:"$$base"-1.0 .; \
+	done;
+	for base in "1" "2"; do \
+		docker build -f bases/amazonlinux.Dockerfile --build-arg version="$$base" -t ajitemsahasrabuddhe/amazonlinux-base:"$$base"-1.0 .; \
 	done;
 
 .PHONY: build-apache
@@ -55,8 +58,11 @@ push:
 	for base in "trusty" "xenial" "bionic"; do \
 		docker push ajitemsahasrabuddhe/ubuntu-base:"$$base"-1.0; \
 	done; \
-	for base in "6" "7"; do \
-		dockerpush ajitemsahasrabuddhe/centos-base:"$$base"-1.0; \
+	for base in "centos6" "centos7"; do \
+		docker push ajitemsahasrabuddhe/centos-base:"$$base"-1.0 .; \
+	done;
+	for base in "1" "2"; do \
+		docker push ajitemsahasrabuddhe/amazonlinux-base:"$$base"-1.0 .; \
 	done;
 	for base_version in "jessie" "stretch"; do \
 		for php_version in "5.6" "7.0" "7.1" "7.2" "7.3"; do \

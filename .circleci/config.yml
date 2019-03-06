@@ -1,0 +1,44 @@
+version: 2
+jobs:
+  build-base:
+    machine: true
+    steps:
+      - checkout
+      - run: make build-base
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - run: make push-base
+  build-apache:
+    machine: true
+    steps:
+      - checkout
+      - run: make build-apache
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - run: make push-apache
+  build-nginx:
+    machine: true
+    steps:
+      - checkout
+      - run: make build-nginx
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - run: make push-nginx
+workflows:
+    version: 2
+    build_and_push:
+      jobs:
+        - build-base:
+            filters:
+              branches:
+                only: master
+        - build-apache:
+            requires:
+              - build-base
+            filters:
+              branches:
+                only: master
+        - build-nginx:
+            requires:
+              - build-base
+            filters:
+              branches:
+                only: master
+  

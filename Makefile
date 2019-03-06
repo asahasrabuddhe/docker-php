@@ -69,10 +69,10 @@ push-base:
 		docker push ajitemsahasrabuddhe/ubuntu-base:"$$base"-1.1; \
 	done; \
 	for base in "6" "7"; do \
-		docker push ajitemsahasrabuddhe/centos-base:"$$base"-1.0 .; \
+		docker push ajitemsahasrabuddhe/centos-base:"$$base"-1.0; \
 	done;
 	for base in "1" "2"; do \
-		docker push ajitemsahasrabuddhe/amazonlinux-base:"$$base"-1.0 .; \
+		docker push ajitemsahasrabuddhe/amazonlinux-base:"$$base"-1.0; \
 	done;
 
 .PHONY: push-apache

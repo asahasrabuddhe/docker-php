@@ -45,13 +45,19 @@ build-nginx:
 	done;
 
 .PHONY: push
-push:
+push: push-base push-apache push-nginx
+
+.PHONY: push-base
+push-base:
 	for base in "jessie" "stretch"; do \
 		docker push ajitemsahasrabuddhe/debian-base:"$$base"-1.1; \
 	done; \
 	for base in "trusty" "xenial" "bionic"; do \
 		docker push ajitemsahasrabuddhe/ubuntu-base:"$$base"-1.1; \
 	done; \
+
+.PHONY: push-apache
+push-apache:
 	for base_version in "jessie" "stretch"; do \
 		for php_version in "5.6" "7.0" "7.1" "7.2" "7.3"; do \
 				docker push ajitemsahasrabuddhe/php-apache:"$$base_version"-"$$php_version"; \
@@ -65,3 +71,17 @@ push:
 		done; \
 	done; \
 	
+.PHONY: push-nginx
+push-apache:
+	for base_version in "jessie" "stretch"; do \
+		for php_version in "5.6" "7.0" "7.1" "7.2" "7.3"; do \
+				docker push ajitemsahasrabuddhe/php-apache:"$$base_version"-"$$php_version"; \
+				docker push ajitemsahasrabuddhe/php-apache:"$$base_version"-"$$php_version"-dev; \
+		done; \
+	done;
+	for base_version in "trusty" "xenial" "bionic"; do \
+		for php_version in "5.6" "7.0" "7.1" "7.2" "7.3"; do \
+				docker push ajitemsahasrabuddhe/php-apache:"$$base_version"-"$$php_version"; \
+				docker push ajitemsahasrabuddhe/php-apache:"$$base_version"-"$$php_version"-dev; \
+		done; \
+	done; \

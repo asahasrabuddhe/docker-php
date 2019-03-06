@@ -68,7 +68,7 @@ push-base:
 	for base in "trusty" "xenial" "bionic"; do \
 		docker push ajitemsahasrabuddhe/ubuntu-base:"$$base"-1.1; \
 	done; \
-	for base in "centos6" "centos7"; do \
+	for base in "6" "7"; do \
 		docker push ajitemsahasrabuddhe/centos-base:"$$base"-1.0 .; \
 	done;
 	for base in "1" "2"; do \

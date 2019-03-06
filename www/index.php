@@ -25,6 +25,7 @@
                 <strong>PHP</strong> Development Image
             </h1>
             <div id="accordion">
+                <?php $info = phpinfo_array(); ?>
                 <?php foreach ($info as $cat => $val) { ?>
                     <h2 class="section-title"><?php echo $cat ?></h2>
                     <div>

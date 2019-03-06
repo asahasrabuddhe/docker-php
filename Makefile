@@ -9,7 +9,7 @@ build-base:
 	for base in "trusty" "xenial" "bionic"; do \
 		docker build -f bases/ubuntu.Dockerfile --build-arg version="$$base" -t ajitemsahasrabuddhe/ubuntu-base:"$$base"-1.1 .; \
 	done;
-	for base in "centos6" "centos7"; do \
+	for base in "6" "7"; do \
 		docker build -f bases/centos.Dockerfile --build-arg version="$$base" -t ajitemsahasrabuddhe/centos-base:"$$base"-1.0 .; \
 	done;
 	for base in "1" "2"; do \
@@ -29,6 +29,13 @@ build-apache:
 		for php_version in "5.6" "7.0" "7.1" "7.2" "7.3"; do \
 			for env in "dev" "prod"; do \
 				docker build -f apache/ubuntu.Dockerfile --build-arg base_version="$$base_version"-1.1 --build-arg php_version="$$php_version" --build-arg env="$$env" -t ajitemsahasrabuddhe/php-apache:"$$base_version"-"$$php_version"-dev .; \
+			done; \
+		done; \
+	done;
+	for base_version in "centos6" "centos7"; do \
+		for php_version in "5.6" "7.0" "7.1" "7.2" "7.3"; do \
+			for env in "dev" "prod"; do \
+				docker build -f apache/centos.Dockerfile --build-arg base_version="$$base_version"-1.0 --build-arg php_version="$${php_version//.}" --build-arg env="$$env" -t ajitemsahasrabuddhe/php-apache:"$$base_version"-"$$php_version"-dev .; \
 			done; \
 		done; \
 	done;

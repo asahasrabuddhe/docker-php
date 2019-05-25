@@ -32,7 +32,7 @@ build-apache:
 			done; \
 		done; \
 	done;
-	for base_version in "centos6" "centos7"; do \
+	for base_version in "6" "7"; do \
 		for php_version in "5.6" "7.0" "7.1" "7.2" "7.3"; do \
 			for env in "dev" "prod"; do \
 				docker build -f apache/centos.Dockerfile --build-arg base_version="$$base_version"-1.0 --build-arg php_version="$$php_version" --build-arg env="$$env" -t ajitemsahasrabuddhe/php-apache:"$$base_version"-"$$php_version"-dev .; \

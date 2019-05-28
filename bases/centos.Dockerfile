@@ -17,11 +17,9 @@ RUN yum update -y \
     iputils \
     locales \
     python-setuptools \
+    supervisor \
     sudo \
     && yum clean all
-
-RUN mkdir -p /var/log/supervisor \
-    && easy_install supervisor
 
 # Set Locale / Timezone
 ENV TZ=Asia/Kolkata

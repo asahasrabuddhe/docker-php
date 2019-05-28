@@ -17,11 +17,13 @@ RUN yum update -y \
     iputils \
     locales \
     python-setuptools \
+    python-pip \
     sudo \
     && yum clean all
 
 RUN mkdir -p /var/log/supervisor \
-    && easy_install supervisor
+    && if [ ! -f /usr/bin/pip ]; then ln -sf /usr/bin/python-pip /usr/bin/pip; fi \
+    && pip install supervisor
 
 # Set Locale / Timezone
 ENV TZ=Asia/Kolkata
